@@ -28,84 +28,34 @@ public class StudentController {
 
     @Autowired
     private ResultssService resultssService;
-
-    @Autowired
     private ClassService classService;
 
     @PostMapping(value = "/stu/login")
     public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password, Map<String,Object> map, HttpSession session)
-    {
-        Student stu=studentService.login(username,password);
-        if(stu!=null)
-        {
-            session.setAttribute("loginUser",username);
+                        @RequestParam("password") String password, Map<String, Object> map, HttpSession session) {
+        Student stu = studentService.login(username, password);
+        if (stu != null) {
+            session.setAttribute("loginUser", username);
             return "redirect:/stumain.html";
-        }
-        else
-        {
-            map.put("msg","用户名或密码错误");
-            return  "login";
+        } else {
+            map.put("msg", "用户名或密码错误");
+            return "login";
         }
     }
 
     //返回首页
     @GetMapping(value = "/stu/toindex")
-    public String toindex(){
+    public String toindex() {
         return "redirect:/stumain.html";
     }
 
     //返回学生成绩首页
-    @GetMapping(value = "/stu/toUpdateMsgPage/{pn}")
-    public String tostudentpage(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
-    {
+    @GetMapping(value = "/stu/toresdmin/{pn}")
+    public String toresdmin(@PathVariable("pn") Integer pn, Model model, HttpSession httpSession) {
         PageHelper.startPage(pn, 9);
         List<Resultss> resultsses = resultssService.selectByStuId((String) httpSession.getAttribute("loginUser"));
         PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
-        model.addAttribute("pageInfo",page);
+        model.addAttribute("pageInfo", page);
         return "stu/resultlist";
-    }
-    //更新学生信息操作
-    @PutMapping(value = "/stu/updateStuMsg")
-    public String updateStuMsg(@Valid Student student, BindingResult bindingResult, Model model,HttpSession httpSession)
-    {
-        List<ObjectError> allErrors = bindingResult.getAllErrors();
-        List<MyError> errmsg = new ArrayList<>();
-        List<Classes> classes = classService.getAllClass();
-        if(allErrors.size()==0)
-        {
-            Student studentInit=studentService.selectById((String) httpSession.getAttribute("loginUser"));
-            student.setStuId(studentInit.getStuId());
-            student.setStuName(studentInit.getStuName());
-            student.setStuClass(studentInit.getStuClass());
-            student.setStuSex(studentInit.getStuSex());
-
-            studentService.deleStu(studentInit.getStuId());
-            studentService.addStudentHavePass(student);
-            return "redirect:/updateSucc.html";
-        }
-        else
-        {
-            for (ObjectError error:allErrors)
-            {
-                errmsg.add(new MyError(error.getDefaultMessage()));
-            }
-            model.addAttribute("errors",errmsg);
-            model.addAttribute("stu",student);
-            model.addAttribute("classes",classes);
-            return "stu/updateStu";
-        }
-    }
-
-    //根据学期查询成绩
-    @GetMapping(value = "/stu/selectResByTerm/{pn}")
-    public String selectResByTerm(@PathVariable("pn") Integer pn,@Param("resTerm") String resTerm, Model model,HttpSession httpSession)
-    {
-        PageHelper.startPage(pn, 9);
-        List<Resultss> resultsses=resultssService.selectByStuIdAndResTerm((String) httpSession.getAttribute("loginUser"),resTerm);
-        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
-        model.addAttribute("pageInfo",page);
-        model.addAttribute("resTerm",resTerm);
-        return "stu/reslistbyterm";
     }
 }

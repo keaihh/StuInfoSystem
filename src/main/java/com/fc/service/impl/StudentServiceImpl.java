@@ -28,23 +28,4 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectStudentByStuId(stuId);
     }
 
-    @Override
-    public void deleStu(String stuId) {
-
-    }
-
-    @Override
-    public void addStudentHavePass(Student student) {
-
-    }
-
-    @Override
-    public void addStudent(Student student) {
-
-    }
-
-    @Override
-    public List<Student> seleStuByClassName(String className) {
-        return null;
-    }
 }
