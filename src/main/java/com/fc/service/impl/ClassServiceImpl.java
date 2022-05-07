@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class ClassServiceImpl implements ClassService {
 
@@ -25,15 +24,4 @@ public class ClassServiceImpl implements ClassService {
     public Classes selectById(String classId) {
         return classMapper.selectClassById(classId);
     }
-
-
-    @Override
-    public int addClass(Classes classes) {
-        return classMapper.insertClass(classes);
     }
-
-    @Override
-    public Classes selectByName(String className) {
-        return classMapper.selectClassByName(className);
-    }
-}

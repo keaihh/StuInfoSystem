@@ -189,4 +189,91 @@ public class AdminController {
         model.addAttribute("className",className);
         return "adm/stubyclass";
     }
+
+    //返回教师管理首页
+    @GetMapping(value = "/adm/toteadmin/{pn}")
+    public String toteadmin(@PathVariable("pn") Integer pn,Model model)
+    {
+        PageHelper.startPage(pn, 6);
+        List<Teacher> teachers=teacherService.getAllTeacher();
+        PageInfo<Teacher> page = new PageInfo<Teacher>(teachers, 5);
+        model.addAttribute("pageInfo",page);
+        return "adm/tealist";
+    }
+
+
+    //返回教师添加页面
+    @GetMapping(value = "/adm/teaadd")
+    public String teatoaddpage()
+    {
+        return "adm/addtea";
+    }
+
+    //处理教师添加事务
+    @PostMapping(value = "/adm/teaAdd")
+    public String teaAdd(@Valid Teacher teacher, BindingResult bindingResult,Model model)
+    {
+        List<ObjectError> allErrors = bindingResult.getAllErrors();
+        List<MyError> errmsg = new ArrayList<>();
+        if(allErrors.size()==0)
+        {
+            Teacher teacherVail=teacherService.selectById(teacher.getTeaId());
+            if(teacherVail==null)
+            {
+                teacherService.addTeacher(teacher);
+                return "redirect:/adm/toteadmin/1";
+            }
+            else{
+                errmsg.add(new MyError("已存在该工号的教师"));
+                model.addAttribute("errors",errmsg);
+                model.addAttribute("tea",teacher);
+                return "adm/addtea";
+            }
+        }
+        else {
+            for (ObjectError error:allErrors)
+            {
+                errmsg.add(new MyError(error.getDefaultMessage()));
+            }
+            model.addAttribute("errors",errmsg);
+            model.addAttribute("tea",teacher);
+            return "adm/addtea";
+        }
+    }
+
+
+    //返回教师修改页面
+    @GetMapping(value = "/adm/tea/{teaId}")
+    public String updateTeaPage(@PathVariable("teaId") String teaId,Model model)
+    {
+        Teacher tea=teacherService.selectById(teaId);
+        model.addAttribute("tea",tea);
+        return "adm/upadtetea";
+    }
+
+
+    //更新教师信息操作
+    @PutMapping(value = "/adm/tea")
+    public String updateTea(@Valid Teacher teacher,BindingResult bindingResult,Model model)
+    {
+        List<ObjectError> allErrors = bindingResult.getAllErrors();
+        List<MyError> errmsg = new ArrayList<>();
+        if(allErrors.size()==0)
+        {
+            System.out.println(teacher);
+            teacherService.deleTea(teacher.getTeaId());
+            teacherService.addTeacherHavePass(teacher);
+            return "redirect:/adm/toteadmin/1";
+        }
+        else
+        {
+            for (ObjectError error:allErrors)
+            {
+                errmsg.add(new MyError(error.getDefaultMessage()));
+            }
+            model.addAttribute("errors",errmsg);
+            model.addAttribute("tea",teacher);
+            return "adm/upadtetea";
+        }
+    }
 }

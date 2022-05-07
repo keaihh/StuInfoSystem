@@ -33,6 +33,7 @@ public class TeacherController {
     @Autowired
     private StudentService studentService;
 
+
     @PostMapping(value = "/tea/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password, Map<String,Object> map, HttpSession session)
@@ -56,18 +57,6 @@ public class TeacherController {
         return "redirect:/teamain.html";
     }
 
-    //返回成绩管理首页
-    @GetMapping(value = "/tea/toteadmin/{pn}")
-    public String toteadmin(@PathVariable("pn") Integer pn, Model model)
-    {
-        PageHelper.startPage(pn, 6);
-        List<Resultss> resultsses=resultssService.getAllResult();
-        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
-        List<Classes> classes = classService.getAllClass();
-        model.addAttribute("classes",classes);
-        model.addAttribute("pageInfo",page);
-        return "tea/tearesultlist";
-    }
 
     //返回教师信息修改页面
     @GetMapping(value = "/tea/toUpdateMsgPage")
@@ -108,53 +97,18 @@ public class TeacherController {
         }
     }
 
-    //处理成绩添加事务
-    @PostMapping(value = "/tea/resAdd")
-    public String resAdd(@Valid Resultss resultss,BindingResult bindingResult,Model model)
+    //根据ID查询学生的成绩
+    @GetMapping(value = "/tea/selectById/{pn}")
+    public String selectResultByStuId(@PathVariable("pn") Integer pn,@Param("stuId") String stuId, Model model)
     {
-        List<ObjectError> allErrors = bindingResult.getAllErrors();
-        List<MyError> errmsg = new ArrayList<>();
-        Resultss resultssVail=null;
-        if(allErrors.size()==0)
-        {
-            if(studentService.selectById(resultss.getStuId())!=null) {
-                resultssVail = resultssService.selectResultByStuIdAndSubName(resultss.getStuId(), resultss.getSubName());
-                if (resultssVail == null) {
-                    resultssService.addResult(resultss);
-                    return "redirect:/tea/toteadmin/1";
-                } else {
-                    errmsg.add(new MyError("已存在该学生的此成绩信息"));
-                    model.addAttribute("errors", errmsg);
-                    model.addAttribute("res", resultss);
-                    return "tea/addResult";
-                }
-            }
-            else{
-                errmsg.add(new MyError("不存在该学号的学生"));
-                model.addAttribute("errors", errmsg);
-                model.addAttribute("res", resultss);
-                return "tea/addResult";
-            }
-        }
-        else {
-            for (ObjectError error:allErrors)
-            {
-                errmsg.add(new MyError(error.getDefaultMessage()));
-            }
-            model.addAttribute("errors",errmsg);
-            model.addAttribute("res",resultss);
-            return "tea/addResult";
-        }
+        PageHelper.startPage(pn, 6);
+        List<Resultss> resultsses=resultssService.selectByStuId(stuId);
+        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
+        List<Classes> classes=classService.getAllClass();
+        model.addAttribute("classes",classes);
+        model.addAttribute("pageInfo",page);
+        model.addAttribute("stuId",stuId);
+        return "tea/tearesultlistbystuid";
     }
-    //返回成绩修改页面
-    @GetMapping(value = "/tea/res/{resId}")
-    public String updateResPage(@PathVariable("resId") int resId,Model model)
-    {
-        Resultss resultss=resultssService.selectResultByResId(resId);
-        model.addAttribute("res",resultss);
-        model.addAttribute("resId",resId);
-        return "tea/updateResult";
-    }
-
 
 }

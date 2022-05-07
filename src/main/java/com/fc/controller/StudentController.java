@@ -28,8 +28,6 @@ public class StudentController {
 
     @Autowired
     private ResultssService resultssService;
-
-    @Autowired
     private ClassService classService;
 
     @PostMapping(value = "/stu/login")
@@ -56,8 +54,8 @@ public class StudentController {
     }
 
     //返回学生成绩首页
-    @GetMapping(value = "/stu/toUpdateMsgPage/{pn}")
-    public String tostudentpage(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
+    @GetMapping(value = "/stu/toresdmin/{pn}")
+    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
     {
         PageHelper.startPage(pn, 9);
         List<Resultss> resultsses = resultssService.selectByStuId((String) httpSession.getAttribute("loginUser"));
@@ -65,6 +63,18 @@ public class StudentController {
         model.addAttribute("pageInfo",page);
         return "stu/resultlist";
     }
+    //返回学生信息修改页面
+    @GetMapping(value = "/stu/toUpdateMsgPage")
+    public String toUpdateMsgPage(HttpSession httpSession, Model model)
+    {
+
+        Student stu= studentService.selectById((String) httpSession.getAttribute("loginUser"));
+        List<Classes> classes=classService.getAllClass();
+        model.addAttribute("stu",stu);
+        model.addAttribute("classes",classes);
+        return "stu/updateStu";
+    }
+
     //更新学生信息操作
     @PutMapping(value = "/stu/updateStuMsg")
     public String updateStuMsg(@Valid Student student, BindingResult bindingResult, Model model,HttpSession httpSession)
@@ -95,17 +105,5 @@ public class StudentController {
             model.addAttribute("classes",classes);
             return "stu/updateStu";
         }
-    }
-
-    //根据学期查询成绩
-    @GetMapping(value = "/stu/selectResByTerm/{pn}")
-    public String selectResByTerm(@PathVariable("pn") Integer pn,@Param("resTerm") String resTerm, Model model,HttpSession httpSession)
-    {
-        PageHelper.startPage(pn, 9);
-        List<Resultss> resultsses=resultssService.selectByStuIdAndResTerm((String) httpSession.getAttribute("loginUser"),resTerm);
-        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
-        model.addAttribute("pageInfo",page);
-        model.addAttribute("resTerm",resTerm);
-        return "stu/reslistbyterm";
     }
 }

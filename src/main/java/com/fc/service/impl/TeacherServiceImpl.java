@@ -31,6 +31,11 @@ public class TeacherServiceImpl  implements TeacherService {
     }
 
     @Override
+    public void addTeacher(Teacher teacher) {
+
+    }
+
+    @Override
     public void deleTea(String teaId) {
 
     }
