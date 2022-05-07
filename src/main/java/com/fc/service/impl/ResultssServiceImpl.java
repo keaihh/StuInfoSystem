@@ -39,8 +39,8 @@ public class ResultssServiceImpl  implements ResultssService {
     }
 
     @Override
-    public void addResult(Resultss resultss) {
-
+    public int addResult(Resultss resultss) {
+        return resultMapper.insertResult(resultss);
     }
 
     @Override

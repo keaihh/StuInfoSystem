@@ -33,6 +33,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public int deleteById(String classId) {
+        return classMapper.delectClassById(classId);
+    }
+
+    @Override
     public Classes selectByName(String className) {
         return classMapper.selectClassByName(className);
     }

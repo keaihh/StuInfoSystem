@@ -15,4 +15,6 @@ public interface TeacherService {
     void deleTea(String teaId);
 
     void addTeacherHavePass(Teacher teacher);
+
+    void addTeacher(Teacher teacher);
 }

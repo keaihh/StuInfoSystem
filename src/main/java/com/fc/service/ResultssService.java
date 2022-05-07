@@ -15,7 +15,7 @@ public interface ResultssService {
 
     Resultss selectResultByResId(int resId);
 
-    void addResult(Resultss resultss);
+    int addResult(Resultss resultss);
 
     Resultss selectResultByStuIdAndSubName(String stuId, String subName);
 }

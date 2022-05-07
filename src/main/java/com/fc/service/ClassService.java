@@ -17,4 +17,5 @@ public interface ClassService {
     int addClass(Classes classes);
 
 
+    int deleteById(String classId);
 }
