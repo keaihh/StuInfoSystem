@@ -155,6 +155,4 @@ public class TeacherController {
         model.addAttribute("resId",resId);
         return "tea/updateResult";
     }
-
-
 }
