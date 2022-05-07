@@ -4,10 +4,10 @@ import com.fc.bean.Teacher;
 
 import java.util.List;
 
-
 public interface TeacherService {
+
+    Teacher login(String teaId, String teaPass);
 
     Teacher selectById(String teaId);
 
-    int deleTea(String teaId);
 }

@@ -6,6 +6,7 @@ import com.fc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 @Service
 public class TeacherServiceImpl  implements TeacherService {
@@ -14,13 +15,13 @@ public class TeacherServiceImpl  implements TeacherService {
     private TeacherMapper teacherMapper;
 
     @Override
-    public Teacher selectById(String teaId) {
-        return teacherMapper.selectTeacherByStuId(teaId);
+    public Teacher login(String teaId, String teaPass) {
+        return teacherMapper.selectTeacherByIdAndPass(teaId,teaPass);
     }
 
     @Override
-    public int deleTea(String teaId) {
-        return teacherMapper.deleteTeaById(teaId);
+    public Teacher selectById(String teaId) {
+        return teacherMapper.selectTeacherByStuId(teaId);
     }
 
 }
