@@ -8,6 +8,11 @@ public interface TeacherService {
 
     Teacher login(String teaId, String teaPass);
 
+    List<Teacher> getAllTeacher();
+
     Teacher selectById(String teaId);
 
+    void deleTea(String teaId);
+
+    void addTeacherHavePass(Teacher teacher);
 }
