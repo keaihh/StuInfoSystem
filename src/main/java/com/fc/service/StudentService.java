@@ -10,12 +10,4 @@ public interface StudentService {
      List<Student> getAllStudent();
 
      Student selectById(String stuId);
-
-     void deleStu(String stuId);
-
-     void addStudentHavePass(Student student);
-
-     void addStudent(Student student);
-
-     List<Student> seleStuByClassName(String className);
 }

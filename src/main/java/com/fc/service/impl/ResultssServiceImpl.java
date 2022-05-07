@@ -19,32 +19,7 @@ public class ResultssServiceImpl  implements ResultssService {
     private ResultMapper resultMapper;
 
     @Override
-    public List<Resultss> getAllResult() {
-        return resultMapper.selectAllResult();
-    }
-
-    @Override
     public List<Resultss> selectByStuId(String stuId) {
         return resultMapper.selectResultByStuId(stuId);
-    }
-
-    @Override
-    public List<Resultss> selectByStuIdAndResTerm(String loginUser, String resTerm) {
-        return null;
-    }
-
-    @Override
-    public Resultss selectResultByResId(int resId) {
-        return null;
-    }
-
-    @Override
-    public void addResult(Resultss resultss) {
-
-    }
-
-    @Override
-    public Resultss selectResultByStuIdAndSubName(String stuId, String subName) {
-        return null;
     }
 }

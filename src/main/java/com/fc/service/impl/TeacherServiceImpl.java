@@ -20,23 +20,8 @@ public class TeacherServiceImpl  implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getAllTeacher() {
-        return teacherMapper.selectAllTeacher();
-    }
-
-
-    @Override
     public Teacher selectById(String teaId) {
         return teacherMapper.selectTeacherByStuId(teaId);
     }
 
-    @Override
-    public void deleTea(String teaId) {
-
-    }
-
-    @Override
-    public void addTeacherHavePass(Teacher teacher) {
-
-    }
 }
