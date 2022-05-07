@@ -11,7 +11,11 @@ public interface StudentService {
 
      Student selectById(String stuId);
 
-    void deleStu(String stuId);
+     void deleStu(String stuId);
 
-    void addStudentHavePass(Student student);
+     void addStudentHavePass(Student student);
+
+     void addStudent(Student student);
+
+     List<Student> seleStuByClassName(String className);
 }

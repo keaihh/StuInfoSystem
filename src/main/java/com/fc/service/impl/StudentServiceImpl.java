@@ -37,4 +37,14 @@ public class StudentServiceImpl implements StudentService {
     public void addStudentHavePass(Student student) {
 
     }
+
+    @Override
+    public void addStudent(Student student) {
+
+    }
+
+    @Override
+    public List<Student> seleStuByClassName(String className) {
+        return null;
+    }
 }
