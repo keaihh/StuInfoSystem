@@ -73,6 +73,80 @@ public class AdminController {
         return "forward:/stuadmin.html";
     }
 
+
+
+    //返回教师管理首页
+    @GetMapping(value = "/adm/toteadmin/{pn}")
+    public String toteadmin(@PathVariable("pn") Integer pn,Model model)
+    {
+        PageHelper.startPage(pn, 6);
+        List<Teacher> teachers=teacherService.getAllTeacher();
+        PageInfo<Teacher> page = new PageInfo<Teacher>(teachers, 5);
+        model.addAttribute("pageInfo",page);
+        return "adm/tealist";
+    }
+
+    //    @GetMapping(value = "/adm/selectByClass/{pn}")
+    //处理删除学生事务从根据班级查找页面发送来的
+    @DeleteMapping(value = "/adm/stubyclass/{stuId}")
+    public String delestubyclass(@PathVariable("stuId") String stuId)
+    {
+        Student student = studentService.selectById(stuId);
+        studentService.deleStu(stuId);
+        try {
+            return "redirect:/adm/selectByClass/1?className="+ URLEncoder.encode(student.getStuClass(),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/adm/toclassdmin/1";
+    }
+
+    //返回学生修改页面从根据班级查找页面发送来的
+    @GetMapping(value = "/adm/stubyclass/{stuId}")
+    public String updateStuPagebyclass(@PathVariable("stuId") String stuId,Model model)
+    {
+        Student stu=studentService.selectById(stuId);
+        List<Classes> classes=classService.getAllClass();
+        model.addAttribute("stu",stu);
+        model.addAttribute("classes",classes);
+        model.addAttribute("ininclass",stu.getStuClass());
+        return "adm/updatestubyclass";
+    }
+
+    //更新学生信息操作从根据班级查找页面发送来的
+    @PutMapping(value = "/adm/stubyclass")
+    public String updateStubyclass(@Valid Student student,BindingResult bindingResult,Model model,@Param("ininclass") String ininclass)
+    {
+
+        List<ObjectError> allErrors = bindingResult.getAllErrors();
+        List<MyError> errmsg = new ArrayList<>();
+        List<Classes> classes = classService.getAllClass();
+        if(allErrors.size()==0)
+        {
+            System.out.println(student);
+            studentService.deleStu(student.getStuId());
+            studentService.addStudentHavePass(student);
+            try {
+                return "redirect:/adm/selectByClass/1?className="+URLEncoder.encode(ininclass,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return "redirect:/adm/toclassdmin/1";
+
+        }
+        else
+        {
+            for (ObjectError error:allErrors)
+            {
+                errmsg.add(new MyError(error.getDefaultMessage()));
+            }
+            model.addAttribute("errors",errmsg);
+            model.addAttribute("stu",student);
+            model.addAttribute("classes",classes);
+            return "adm/updatestubyclass";
+        }
+    }
+
     //返回学生添加页面
     @GetMapping(value = "/adm/stuadd")
     public String stutoaddpage(Model model)
