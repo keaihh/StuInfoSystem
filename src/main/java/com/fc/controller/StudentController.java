@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 public class StudentController {
 
@@ -27,8 +28,10 @@ public class StudentController {
     private StudentService studentService;
 
     @Autowired
-    private ResultssService resultssService;
     private ClassService classService;
+
+    @Autowired
+    private ResultssService resultssService;
 
     @PostMapping(value = "/stu/login")
     public String login(@RequestParam("username") String username,
@@ -53,16 +56,7 @@ public class StudentController {
         return "redirect:/stumain.html";
     }
 
-    //返回学生成绩首页
-    @GetMapping(value = "/stu/toresdmin/{pn}")
-    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
-    {
-        PageHelper.startPage(pn, 9);
-        List<Resultss> resultsses = resultssService.selectByStuId((String) httpSession.getAttribute("loginUser"));
-        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
-        model.addAttribute("pageInfo",page);
-        return "stu/resultlist";
-    }
+
     //返回学生信息修改页面
     @GetMapping(value = "/stu/toUpdateMsgPage")
     public String toUpdateMsgPage(HttpSession httpSession, Model model)
@@ -105,5 +99,29 @@ public class StudentController {
             model.addAttribute("classes",classes);
             return "stu/updateStu";
         }
+    }
+
+    //返回学生成绩首页
+    @GetMapping(value = "/stu/toresdmin/{pn}")
+    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
+    {
+        PageHelper.startPage(pn, 9);
+        List<Resultss> resultsses = resultssService.selectByStuId((String) httpSession.getAttribute("loginUser"));
+        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
+        model.addAttribute("pageInfo",page);
+        return "stu/resultlist";
+    }
+
+
+    //根据学期查询成绩
+    @GetMapping(value = "/stu/selectResByTerm/{pn}")
+    public String selectResByTerm(@PathVariable("pn") Integer pn,@Param("resTerm") String resTerm, Model model,HttpSession httpSession)
+    {
+        PageHelper.startPage(pn, 9);
+        List<Resultss> resultsses=resultssService.selectByStuIdAndResTerm((String) httpSession.getAttribute("loginUser"),resTerm);
+        PageInfo<Resultss> page = new PageInfo<Resultss>(resultsses, 5);
+        model.addAttribute("pageInfo",page);
+        model.addAttribute("resTerm",resTerm);
+        return "stu/reslistbyterm";
     }
 }

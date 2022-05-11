@@ -26,15 +26,14 @@ public class ClassServiceImpl implements ClassService {
         return classMapper.selectClassById(classId);
     }
 
+    @Override
+    public int deleteById(String classId) {
+        return classMapper.delectClassById(classId);
+    }
 
     @Override
     public int addClass(Classes classes) {
         return classMapper.insertClass(classes);
-    }
-
-    @Override
-    public int deleteById(String classId) {
-        return classMapper.delectClassById(classId);
     }
 
     @Override

@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.47</version>
+			<version>5.1.49</version>
 		</dependency>
 
 		<dependency>
@@ -130,6 +130,12 @@
 			<artifactId>pagehelper</artifactId>
 			<version>5.2.0</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.github.pagehelper</groupId>-->
+<!--			<artifactId>pagehelper-spring-boot-starter</artifactId>-->
+<!--			<version>1.4.2</version>-->
+<!--		</dependency>-->
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

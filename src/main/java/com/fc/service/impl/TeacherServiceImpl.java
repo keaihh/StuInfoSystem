@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class TeacherServiceImpl  implements TeacherService {
 
@@ -24,6 +25,15 @@ public class TeacherServiceImpl  implements TeacherService {
         return teacherMapper.selectAllTeacher();
     }
 
+    @Override
+    public int addTeacher(Teacher teacher) {
+        return teacherMapper.insertTeacher(teacher);
+    }
+
+    @Override
+    public int addTeacherHavePass(Teacher teacher) {
+        return teacherMapper.insertTeacherHavaPass(teacher);
+    }
 
     @Override
     public Teacher selectById(String teaId) {
@@ -31,17 +41,8 @@ public class TeacherServiceImpl  implements TeacherService {
     }
 
     @Override
-    public void addTeacher(Teacher teacher) {
-
+    public int deleTea(String teaId) {
+        return teacherMapper.deleteTeaById(teaId);
     }
 
-    @Override
-    public void deleTea(String teaId) {
-
-    }
-
-    @Override
-    public void addTeacherHavePass(Teacher teacher) {
-
-    }
 }

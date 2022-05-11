@@ -13,9 +13,9 @@ public interface ClassService {
 
     Classes selectByName(String className);
 
+    int deleteById(String classId);
 
     int addClass(Classes classes);
 
 
-    int deleteById(String classId);
 }

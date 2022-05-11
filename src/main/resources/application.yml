@@ -1,15 +1,10 @@
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/student_online_management_system?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimeZone=GTM+8
     username: root
     password: 5201314
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/student_online_management_system?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&useAffectedRows=true
-    type: com.alibaba.druid.pool.DruidDataSource
-    #   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
   thymeleaf:
     cache: false
     encoding: UTF-8
@@ -17,16 +12,20 @@ spring:
     encoding:
       charset: UTF-8
 mybatis:
+  mapper-locations: com/fc/mapper/*.xml
+  type-aliases-package: com.fc.entity
   configuration:
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
     map-underscore-to-camel-case: true
-
-
-server:
-  port: 8080
-  tomcat:
-    uri-encoding: utf-8
-
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8

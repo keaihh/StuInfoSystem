@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -24,8 +26,27 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public int addStudent(Student student) {
+        return studentMapper.insertStudent(student);
+    }
+
+    @Override
     public Student selectById(String stuId) {
         return studentMapper.selectStudentByStuId(stuId);
     }
 
+    @Override
+    public int deleStu(String stuId) {
+        return studentMapper.deleteStuById(stuId);
+    }
+
+    @Override
+    public List<Student> seleStuByClassName(String stuClass) {
+        return studentMapper.selectStuByStuclass(stuClass);
+    }
+
+    @Override
+    public int addStudentHavePass(Student student) {
+        return studentMapper.insertStudentHavaPass(student);
+    }
 }
