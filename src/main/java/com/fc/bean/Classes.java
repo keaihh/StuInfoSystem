@@ -1,7 +1,7 @@
 package com.fc.bean;
 
-import javax.validation.constraints.Size;
 
+import javax.validation.constraints.Size;
 
 public class Classes {
 

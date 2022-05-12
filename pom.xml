@@ -119,21 +119,16 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!--引入pageHelper分页插件 -->
-		<!--        <dependency>-->
-		<!--            <groupId>com.github.pagehelper</groupId>-->
-		<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
-		<!--            <version>1.2.10</version>-->
-		<!--        </dependency>-->
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper</artifactId>
-			<version>5.2.0</version>
-		</dependency>
+<!--		引入pageHelper分页插件 -->
+		        <dependency>
+		            <groupId>com.github.pagehelper</groupId>
+		            <artifactId>pagehelper-spring-boot-starter</artifactId>
+		            <version>1.2.13</version>
+		        </dependency>
 <!--		<dependency>-->
 <!--			<groupId>com.github.pagehelper</groupId>-->
-<!--			<artifactId>pagehelper-spring-boot-starter</artifactId>-->
-<!--			<version>1.4.2</version>-->
+<!--			<artifactId>pagehelper</artifactId>-->
+<!--			<version>5.2.0</version>-->
 <!--		</dependency>-->
 
         <dependency>
@@ -142,7 +137,11 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

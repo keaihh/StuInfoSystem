@@ -8,9 +8,9 @@ spring:
   thymeleaf:
     cache: false
     encoding: UTF-8
-  http:
-    encoding:
-      charset: UTF-8
+
+
+
 mybatis:
   mapper-locations: com/fc/mapper/*.xml
   type-aliases-package: com.fc.entity
@@ -25,6 +25,8 @@ pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
+  params: count=countSql
+
 server:
   port: 8080
   tomcat:
